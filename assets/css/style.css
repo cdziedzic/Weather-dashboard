@@ -1,0 +1,50 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 0.5%;
+    font-size: 20pt;
+}
+
+main {
+    display: flex;
+    margin-top: 1%;
+    flex-wrap: wrap;
+}
+
+main section {
+    padding: 0.3%;
+}
+
+aside {
+    margin: 0% 1% 0% 1%;
+}
+
+.weather {
+    border: solid black 1px;
+    padding: 0.5%
+
+}
+
+.five-day {
+   border: solid black 1px;
+   padding: .5%;
+   margin-top: 1%;
+   display: flex;
+   gap: 10px;
+
+}
+
+.aside-button {
+    width: 100%;
+}
+
+aside div {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
