@@ -23,12 +23,23 @@ submitBtn.addEventListener('click', function(event) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(dayjs(data.list[0].dt_txt).format('MM/DD/YYYYY'))
+        console.log(dayjs(data.list[0].dt_txt).format('MM/DD/YYYY'))
             let icon = data.list[0].weather[0].icon
-                city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
+                city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">` + dayjs().format('(MM/DD/YYYY)')
                 temp.textContent = "Temperature: " + data.list[0].main.temp + "°F";
                 wind.textContent = "Wind: " + data.list[0].wind.speed + " mph";
                 humid.textContent = "Humidity: " + data.list[0].main.humidity +"%";
+
+
+                let forecastCard = document.createElement('div')
+        forecastCard.classList = "card bg-dark text-light"
+        forecastCard.style = "width: 12rem;"
+        fiveDay.append(forecastCard) 
+
+    let forecastCardHeader = document.createElement('div')
+    forecastCardHeader.classList = "card-title text-light"
+    forecastCardHeader.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">` + `<p>${dayjs(data.list[0].dt_txt).format('MM/DD/YYYY')}</p>` + `<p>Temp: ${data.list[0].main.temp} °F</p>` + `<p>Wind ${data.list[0].wind.speed} mph</p>` + `<p>Humidity: ${data.list[0].main.humidity}%`
+    forecastCard.append(forecastCardHeader)
     })
 
     cityName.value = ''
@@ -37,10 +48,9 @@ submitBtn.addEventListener('click', function(event) {
         return null
     }
 
-    else    {
     storedArray.push(enteredText)
     localStorage.setItem("savedCity", JSON.stringify(storedArray))
-    }
+    
 
     let listItemEl = document.createElement("button")
     listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
@@ -48,16 +58,10 @@ submitBtn.addEventListener('click', function(event) {
     listItemEl.innerHTML = enteredText
     ListEl.append(listItemEl)
 
-    let forecastCard = document.createElement('div')
-    forecastCard.classList = "card bg-dark"
-    forecastCard.style = "width: 12rem;"
-    forecastCard.textContent = 'hello'
+    
 
-    let forecastCardHeader = document.createElement('div')
-    forecastCardHeader.h5.classList = "card-title text-light"
-    forecastCardHeader.textContent = city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
-   
-    fiveDay.append(forecastCard) 
+    
+
 
     
     });
@@ -76,8 +80,7 @@ ListEl.addEventListener("click", function (event) {
     .then(response => response.json())
     .then(data => {
                 let icon = data.list[0].weather[0].icon
-                city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
-                temp.textContent = "Temperature: " + data.list[0].main.temp + "°F";
+                city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">` + dayjs().format('(MM/DD/YYYY)')
                 wind.textContent = "Wind: " + data.list[0].wind.speed + " mph";
                 humid.textContent = "Humidity: " + data.list[0].main.humidity +"%"; 
     
