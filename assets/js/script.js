@@ -5,6 +5,7 @@ let humid = document.getElementById('humidity')
 let submitBtn = document.getElementById('submit')
 let cityName = document.getElementById('cityName')
 let ListEl = document.getElementById('stored-list')
+let fiveDay = document.getElementById('forecastBox')
 let storedArray = []
 
 submitBtn.addEventListener('click', function(event) {
@@ -22,7 +23,8 @@ submitBtn.addEventListener('click', function(event) {
     })
     .then(response => response.json())
     .then(data => {
-                let icon = data.list[0].weather[0].icon
+        console.log(dayjs(data.list[0].dt_txt).format('MM/DD/YYYYY'))
+            let icon = data.list[0].weather[0].icon
                 city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
                 temp.textContent = "Temperature: " + data.list[0].main.temp + "°F";
                 wind.textContent = "Wind: " + data.list[0].wind.speed + " mph";
@@ -40,15 +42,25 @@ submitBtn.addEventListener('click', function(event) {
     localStorage.setItem("savedCity", JSON.stringify(storedArray))
     }
 
-    
-    let listItemEl = document.createElement("button", id = "stored-city")
+    let listItemEl = document.createElement("button")
     listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
-    listItemEl.id = storedArray[i]
+    listItemEl.id = enteredText
     listItemEl.innerHTML = enteredText
     ListEl.append(listItemEl)
-       
-        
-});
+
+    let forecastCard = document.createElement('div')
+    forecastCard.classList = "card bg-dark"
+    forecastCard.style = "width: 12rem;"
+    forecastCard.textContent = 'hello'
+
+    let forecastCardHeader = document.createElement('div')
+    forecastCardHeader.h5.classList = "card-title text-light"
+    forecastCardHeader.textContent = city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
+   
+    fiveDay.append(forecastCard) 
+
+    
+    });
    
 ListEl.addEventListener("click", function (event) {
     let buttonText = event.target.id
