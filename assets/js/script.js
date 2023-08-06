@@ -34,29 +34,44 @@ submitBtn.addEventListener('click', function(event) {
     if (storedArray.includes(enteredText)) {
         return null
     }
-    
-    if (response.status === 404) {
-        return null
-    }
-    
+
     else    {
     storedArray.push(enteredText)
     localStorage.setItem("savedCity", JSON.stringify(storedArray))
     }
 
-    if (response.status === 404) {
-        return null
-    }
     
     let listItemEl = document.createElement("button", id = "stored-city")
     listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
-    listItemEl.id = "stored-city"
+    listItemEl.id = storedArray[i]
     listItemEl.innerHTML = enteredText
     ListEl.append(listItemEl)
        
         
 });
    
+ListEl.addEventListener("click", function (event) {
+    let buttonText = event.target.id
+    
+    fetch (`http://api.openweathermap.org/geo/1.0/direct?q=${buttonText}&limit=5&appid=1ced4366f307f4ccdd38e8cd9911844f`)
+
+    .then(response => response.json())
+    .then(citiesFound => {
+        let firstCity = citiesFound[0]
+    
+    return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=1ced4366f307f4ccdd38e8cd9911844f&units=imperial`)
+    })
+    .then(response => response.json())
+    .then(data => {
+                let icon = data.list[0].weather[0].icon
+                city.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">`
+                temp.textContent = "Temperature: " + data.list[0].main.temp + "°F";
+                wind.textContent = "Wind: " + data.list[0].wind.speed + " mph";
+                humid.textContent = "Humidity: " + data.list[0].main.humidity +"%"; 
+    
+    }
+)})
+
 
 function populateCities() {
     storedArray = (JSON.parse(localStorage.getItem("savedCity"))) || []
@@ -70,7 +85,7 @@ function populateCities() {
     
         let listItemEl = document.createElement("button", id = "stored-city")
         listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
-        listItemEl.id = "stored-city"
+        listItemEl.id = storedArray[i]
         listItemEl.innerHTML = storedArray[i]
         ListEl.append(listItemEl)
 }
