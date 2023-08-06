@@ -51,17 +51,17 @@ submitBtn.addEventListener('click', function(event) {
             forecastCard.append(forecastCardHeader)
         }
     })
-
+    //clear input box text after submit
     cityName.value = ''
-    
+    //check if an item is in array before adding to aside list
     if (storedArray.includes(enteredText)) {
         return null
     }
-
+    // push to array
     storedArray.push(enteredText)
     localStorage.setItem("savedCity", JSON.stringify(storedArray))
     
-
+    //add item to aside list as a button
     let listItemEl = document.createElement("button")
     listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
     listItemEl.id = enteredText
