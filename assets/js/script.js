@@ -5,8 +5,6 @@ let humid = document.getElementById('humidity')
 let submitBtn = document.getElementById('submit')
 let cityName = document.getElementById('cityName')
 let ListEl = document.getElementById('stored-list')
-let listItemEl = $(`<button href="#" class="list-group-item list-group-item-action list-group-item-secondary" id="stored-city"></button>
-`)
 let storedArray = []
 
 submitBtn.addEventListener('click', function(event) {
@@ -21,7 +19,7 @@ submitBtn.addEventListener('click', function(event) {
    
 
     return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=1ced4366f307f4ccdd38e8cd9911844f&units=imperial`)
-})
+    })
     .then(response => response.json())
     .then(data => {
                 let icon = data.list[0].weather[0].icon
@@ -36,10 +34,47 @@ submitBtn.addEventListener('click', function(event) {
     if (storedArray.includes(enteredText)) {
         return null
     }
+    
+    if (response.status === 404) {
+        return null
+    }
+    
     else    {
     storedArray.push(enteredText)
     localStorage.setItem("savedCity", JSON.stringify(storedArray))
     }
+
+    if (response.status === 404) {
+        return null
+    }
+    
+    let listItemEl = document.createElement("button", id = "stored-city")
+    listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
+    listItemEl.id = "stored-city"
+    listItemEl.innerHTML = enteredText
+    ListEl.append(listItemEl)
+       
+        
 });
    
 
+function populateCities() {
+    storedArray = (JSON.parse(localStorage.getItem("savedCity"))) || []
+    
+    if (storedArray.length === 0) {
+        return null
+    } 
+    
+    else {
+        for (let i = 0; i < storedArray.length; i++) {
+    
+        let listItemEl = document.createElement("button", id = "stored-city")
+        listItemEl.classList = "list-group-item list-group-item-action list-group-item-secondary"
+        listItemEl.id = "stored-city"
+        listItemEl.innerHTML = storedArray[i]
+        ListEl.append(listItemEl)
+}
+}
+}
+
+populateCities()
