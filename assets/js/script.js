@@ -36,8 +36,12 @@ submitBtn.addEventListener('click', function(event) {
                 fiveDay.innerHTML = ''
 
             // loop to create 5 forecast cards in 5 day forecast
-            for (let i = 0; i < 5; i++) {
-            
+            for (let i = 0; i < data.list.length; i++) {
+            let itemsToSkip = [1,2,3,4,5,6,7,9,10,11,12,13,14,15,17,18,19,20,21,22,23,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40]
+            if (itemsToSkip.includes(i)) {
+                    continue;
+                }
+
             icon = data.list[i].weather[0].icon
             //create elements for bootstrap card. Needs second div for formatting
             let forecastCard = document.createElement('div')
@@ -102,7 +106,12 @@ ListEl.addEventListener("click", function (event) {
                 fiveDay.innerHTML = ''
                 
                 // loop to create 5 cards for 5 day forecast
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < data.list.length; i++) {
+                    let itemsToSkip = [1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,17,19,20,21,22,23,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40]
+                    if (itemsToSkip.includes(i)) {
+                        continue;
+                    }
+
                     //icon for weather picture
                     icon = data.list[i].weather[0].icon
                    
@@ -116,9 +125,12 @@ ListEl.addEventListener("click", function (event) {
                     forecastCardHeader.classList = "card-title text-light"
                     forecastCardHeader.innerHTML = data.city.name + `<img src="https://openweathermap.org/img/wn/${icon}.png">` + `<p>${dayjs(data.list[i].dt_txt).format('MM/DD/YYYY')}</p>` + `<p>Temp: ${data.list[i].main.temp} °F</p>` + `<p>Wind: ${data.list[i].wind.speed} mph</p>` + `<p>Humidity: ${data.list[i].main.humidity}%`
                     forecastCard.append(forecastCardHeader)
+                    }
                 }
-            }
-)})
+)}
+                
+ 
+)
 
 // load localstorage items into aside list
 function populateCities() {
@@ -142,4 +154,4 @@ function populateCities() {
 }
 }
 
-populateCities()
+populateCities();
