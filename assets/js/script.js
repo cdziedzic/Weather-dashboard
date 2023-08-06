@@ -15,7 +15,7 @@ submitBtn.addEventListener('click', function(event) {
     let enteredText = cityName.value
   
     //geolocator api to get coordinates for an entered city
-    fetch (`http://api.openweathermap.org/geo/1.0/direct?q=${enteredText}&limit=5&appid=1ced4366f307f4ccdd38e8cd9911844f`)
+    fetch (`https://api.openweathermap.org/geo/1.0/direct?q=${enteredText}&limit=5&appid=1ced4366f307f4ccdd38e8cd9911844f`)
     .then(response => response.json())
     .then(citiesFound => {
         let firstCity = citiesFound[0]
@@ -80,7 +80,7 @@ submitBtn.addEventListener('click', function(event) {
 ListEl.addEventListener("click", function (event) {
     let buttonText = event.target.id
     //geolocator api to get coordinates for an entered city
-    fetch (`http://api.openweathermap.org/geo/1.0/direct?q=${buttonText}&limit=5&appid=1ced4366f307f4ccdd38e8cd9911844f`)
+    fetch (`https://api.openweathermap.org/geo/1.0/direct?q=${buttonText}&limit=5&appid=1ced4366f307f4ccdd38e8cd9911844f`)
 
     .then(response => response.json())
     .then(citiesFound => {
